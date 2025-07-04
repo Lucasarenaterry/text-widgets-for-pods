@@ -1,5 +1,5 @@
 # text-widgets-for-pods
-## By Lucas Arena Terry
+### By Lucas Arena Terry
 
 
 ## Tech Stack
@@ -34,7 +34,7 @@
 To run the application both the web-app and the server have to be run at the same time.
 
 Run the web-app:
-```sh npx nx serve web-app ``` 
+```npx nx serve web-app``` 
 
 Run the server (api):
 ```npx nx serve api```
