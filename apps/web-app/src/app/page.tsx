@@ -4,11 +4,7 @@ import { Button } from '../components/button';
 import { TextWidget } from '../components/textWidget';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
-
-type TextWidgetObject = {
-  id: string;
-  text: string;
-};
+import { TextWidgetObject } from '../interfaces';
 
 const widgetData: TextWidgetObject[] = [
   {
@@ -39,9 +35,13 @@ export default function Index() {
       {widgets.map((widget) => (
         <TextWidget
           key={widget.id}
+          id={widget.id}
           text={widget.text}
           onChange={(newText) => {
             console.log('Text changed:', newText);
+          }}
+          onDelete={() => {
+            console.log('Delete button clicked for widget:', widget.id);
           }}
         />
       ))}
