@@ -2,34 +2,50 @@
 import { Button } from '../components/button';
 import { TextWidget } from '../components/textWidget';
 import { PlusIcon } from '@heroicons/react/24/solid';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { TextWidgetObject } from '../interfaces';
 import ApiClient from '../client';
 
 export default function Index() {
   const apiClient = new ApiClient('http://localhost:3000');
   const [widgets, setWidgets] = useState<TextWidgetObject[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchTextWidgets();
   }, []);
 
-  async function fetchTextWidgets() {
+  const fetchTextWidgets = useCallback(async () => {
     const data = await apiClient.textWidgetDao.fetchAllTextWidgets();
-    setWidgets(data);
-  }
+    if (Array.isArray(data)) {
+      setWidgets(data);
+    } else {
+      setError(data.error);
+    }
+  }, []);
 
   async function handleAddWidget() {
     const newTextWidget = await apiClient.textWidgetDao.createTextWidget();
-    if (newTextWidget) {
+    if ('error' in newTextWidget) {
+      setError(newTextWidget.error);
+    } else {
       fetchTextWidgets();
     }
   }
 
   async function handleSaveUpdatedTextWidget(textWidgetId: string) {
-    const widgetToSave = widgets.find((widget) => widget.id === textWidgetId);
-    if (widgetToSave) {
-      await apiClient.textWidgetDao.updateTextWidget(widgetToSave);
+    const textWidgetToSave = widgets.find(
+      (widget) => widget.id === textWidgetId
+    );
+    if (textWidgetToSave) {
+      const updatedWidget = await apiClient.textWidgetDao.updateTextWidget(
+        textWidgetToSave
+      );
+      if ('error' in updatedWidget) {
+        setError(updatedWidget.error);
+      } else {
+        fetchTextWidgets();
+      }
     }
   }
 
@@ -39,6 +55,8 @@ export default function Index() {
     );
     if (success) {
       fetchTextWidgets();
+    } else {
+      setError('Failed to delete text widget');
     }
   }
 
@@ -60,6 +78,11 @@ export default function Index() {
         label="Add Text Widget"
         icon={<PlusIcon className="h-5 w-5" />}
       />
+      {error && (
+        <div className="text-red-500 text-center border border-red-300 bg-red-50 p-4 rounded-lg">
+          {error}
+        </div>
+      )}
       {widgets.map((widget) => (
         <TextWidget
           key={widget.id}

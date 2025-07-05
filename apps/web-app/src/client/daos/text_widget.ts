@@ -8,27 +8,31 @@ export default class TextWidgetDao {
     this.axios = axios;
   }
 
-  async fetchAllTextWidgets(): Promise<TextWidgetObject[]> {
+  async fetchAllTextWidgets(): Promise<TextWidgetObject[] | { error: string }> {
     try {
       const response = await this.axios.get<TextWidgetObject[]>('/api/widgets');
       return response.data;
     } catch (error) {
-      console.error('Error fetching text widgets:', error);
-      throw error;
+      return {
+        error: 'Failed to fetch text widgets',
+      };
     }
   }
 
-  async createTextWidget(): Promise<TextWidgetObject> {
+  async createTextWidget(): Promise<TextWidgetObject | { error: string }> {
     try {
       const response = await this.axios.post<TextWidgetObject>('/api/widgets');
       return response.data;
     } catch (error) {
-      console.error('Error creating text widget:', error);
-      throw error;
+      return {
+        error: 'Failed to create text widget',
+      };
     }
   }
 
-  async updateTextWidget(widget: TextWidgetObject): Promise<TextWidgetObject> {
+  async updateTextWidget(
+    widget: TextWidgetObject
+  ): Promise<TextWidgetObject | { error: string }> {
     try {
       const response = await this.axios.put<TextWidgetObject>(
         `/api/widgets/${widget.id}`,
@@ -36,8 +40,9 @@ export default class TextWidgetDao {
       );
       return response.data;
     } catch (error) {
-      console.error('Error updating text widget:', error);
-      throw error;
+      return {
+        error: 'Failed to update text widget',
+      };
     }
   }
 
@@ -46,7 +51,6 @@ export default class TextWidgetDao {
       await this.axios.delete(`/api/widgets/${id}`);
       return true;
     } catch (error) {
-      console.error('Error deleting text widget:', error);
       return false;
     }
   }
