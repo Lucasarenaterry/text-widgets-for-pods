@@ -36,7 +36,7 @@ export default class TextWidgetDao {
     try {
       const response = await this.axios.put<TextWidgetObject>(
         `/api/widgets/${widget.id}`,
-        widget
+        { text: widget.text }
       );
       return response.data;
     } catch (error) {
