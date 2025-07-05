@@ -50,9 +50,12 @@ You should have the following files in folder:
 - web-app.tar
 - api.tar
 
+- Make sure you have Docker running.
+- Make sure to CD into this folder location.
+
 Load the images using:
-`docker load < api.tar`
-`docker load < web-app.tar`
+`docker load < text_widget_api.tar`
+`docker load < text_widget_web_app.tar`
 
 Run the container:
 `docker-compose up`
