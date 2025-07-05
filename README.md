@@ -26,7 +26,7 @@
 ## Requirements
 
 - Docker (https://www.docker.com/)
-- NPM v10.x ()
+- NPM v10.x
 - node.js v20.x (https://nodejs.org/en/download)
 - NX (https://nx.dev/)
 
@@ -43,7 +43,7 @@ Run the server (api):
 ## Testing
 
 Run all api tests:
-``npx nx test api`
+`npx nx test api`
 
 ## Docker
 
