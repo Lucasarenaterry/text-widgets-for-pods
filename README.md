@@ -1,29 +1,29 @@
 # text-widgets-for-pods
-### By Lucas Arena Terry
 
+### By Lucas Arena Terry
 
 ## Tech Stack
 
 ### Frontend:
 
-- Next.js 
-- React 
-- TypeScript 
+- Next.js
+- React
+- TypeScript
 
 ### Backend:
 
-- Express 
+- Express
 - TypeScript
 
 ### Backend Unit Testing:
+
 - Jest
 
 ### Virtual Container:
 
 - Docker
 
-
-## Requirements 
+## Requirements
 
 - Docker (https://www.docker.com/)
 - NPM v10.x ()
@@ -31,18 +31,24 @@
 - NX (https://nx.dev/)
 
 ## Getting Started
+
 To run the application both the web-app and the server have to be run at the same time.
 
 Run the web-app:
-```npx nx serve web-app``` 
+`npx nx serve web-app`
 
 Run the server (api):
-```npx nx serve api```
+`npx nx serve api`
+
+## Testing
+
+Run all api tests:
+``npx nx test api`
 
 ## Docker
 
 Build the Docker containers:
-```docker-compose up --build```
+`docker-compose up --build`
 
 Start the docker containers:
-```docker compose up```
+`docker compose up`

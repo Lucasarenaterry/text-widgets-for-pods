@@ -17,7 +17,7 @@ export function TextWidgetController(widgetModel: TextWidgetModel) {
       const newWidget = widgetModel.create();
 
       if (!newWidget) {
-        return res.status(400).json({ error: 'Failed to create text widget' });
+        return res.status(404).json({ error: 'Failed to create text widget' });
       }
 
       res.status(201).json(newWidget);
@@ -35,7 +35,7 @@ export function TextWidgetController(widgetModel: TextWidgetModel) {
 
       const updatedWidget = widgetModel.update(id, text);
       if (!updatedWidget) {
-        return res.status(404).json({ error: 'Text widget not found' });
+        return res.status(404).json({ error: 'Failed to update text widget' });
       }
       res.json(updatedWidget);
     },
@@ -49,7 +49,7 @@ export function TextWidgetController(widgetModel: TextWidgetModel) {
 
       const deleted = widgetModel.delete(id);
       if (!deleted) {
-        return res.status(404).json({ error: 'Text widget not found' });
+        return res.status(404).json({ error: 'failed to delete text widget' });
       }
       res.status(204).send();
     },

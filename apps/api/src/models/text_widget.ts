@@ -16,6 +16,7 @@ export class TextWidgetModel {
       id: crypto.randomUUID(),
       text: '',
     };
+
     this.widgets.push(widget);
     return widget;
   }
