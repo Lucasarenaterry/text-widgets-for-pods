@@ -1,19 +1,23 @@
-version: "3.8"
+version: '3.8'
 services:
   api:
+    container_name: text_widget_api
+    image: text_widget_api
     build:
       context: .
       dockerfile: apps/api/Dockerfile
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       NODE_ENV: production
 
   web:
+    container_name: text_widget_web_app
+    image: text_widget_web_app
     build:
       context: .
       dockerfile: apps/web-app/Dockerfile
     ports:
-      - "4200:4200"
+      - '4200:4200'
     environment:
       NODE_ENV: production

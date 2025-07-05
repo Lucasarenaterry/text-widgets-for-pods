@@ -1,3 +1,4 @@
+import { ulid } from 'ulid';
 import { TextWidgetObject } from '../controllers/text_widget';
 
 export class TextWidgetModel {
@@ -13,7 +14,7 @@ export class TextWidgetModel {
 
   public create(): TextWidgetObject {
     const widget: TextWidgetObject = {
-      id: crypto.randomUUID(),
+      id: ulid(),
       text: '',
     };
 
