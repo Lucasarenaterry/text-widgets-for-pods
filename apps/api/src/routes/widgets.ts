@@ -1,12 +1,16 @@
 import { Router } from 'express';
-import TextWidgetController from '../controllers/text_widget';
+import { TextWidgetModel } from '../models/text_widget';
+import { TextWidgetController } from '../controllers/text_widget';
 
-const router = Router();
+export default function setUpWidgetRoutes(router: Router) {
+  const widgetModel = new TextWidgetModel();
+  const textWidgetController = TextWidgetController(widgetModel);
 
-// Text Widget Routes
-router.get('/', TextWidgetController.GET_AllTextWidgets);
-router.post('/', TextWidgetController.POST_CreateTextWidget);
-router.put('/:id', TextWidgetController.PUT_UpdateTextWidget);
-router.delete('/:id', TextWidgetController.DELETE_TextWidget);
+  // Text Widget Routes
+  router.get('/', textWidgetController.GET_AllTextWidgets);
+  router.post('/', textWidgetController.POST_CreateTextWidget);
+  router.put('/:id', textWidgetController.PUT_UpdateTextWidget);
+  router.delete('/:id', textWidgetController.DELETE_TextWidget);
 
-export default router;
+  router.use('/api/widgets', router);
+}

@@ -1,5 +1,5 @@
-import express from 'express';
-import widgetsRoutes from './routes/widgets';
+import express, { Router } from 'express';
+import setUpWidgetRoutes from './routes/widgets';
 import cors from 'cors';
 
 // Use 0.0.0.0 to make accessible from Docker container
@@ -14,7 +14,11 @@ app.use(
     credentials: true,
   })
 );
-app.use('/api/widgets', widgetsRoutes);
+
+const router = Router();
+setUpWidgetRoutes(router);
+
+app.use(router);
 
 app.get('/', (req, res) => {
   res.send({ message: 'API is running' });

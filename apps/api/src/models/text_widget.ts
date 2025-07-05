@@ -1,6 +1,6 @@
 import { TextWidgetObject } from '../controllers/text_widget';
 
-export class textWidgetModel {
+export class TextWidgetModel {
   public widgets: TextWidgetObject[] = [];
 
   constructor(data: TextWidgetObject[] = []) {
