@@ -6,6 +6,7 @@ export interface TextWidgetProps {
   id: string;
   text: string;
   onChange: (newText: string) => void;
+  onBlur: () => void;
   onDelete: () => void;
 }
 
@@ -15,7 +16,7 @@ export function TextWidget(props: TextWidgetProps) {
       <Button
         onClick={props.onDelete}
         icon={<TrashIcon className="h-5 w-5" />}
-        additionalCSS="absolute top-2 right-1 text-gray-400 hover:text-gray-600 bg-transparent hover:bg-gray-100 px-1 py-1 border border-gray-300"
+        class="iconButton"
       />
       <textarea
         id={props.id}
@@ -23,6 +24,7 @@ export function TextWidget(props: TextWidgetProps) {
         placeholder="Enter some text..."
         value={props.text}
         onChange={(e) => props.onChange(e.target.value)}
+        onBlur={props.onBlur}
       />
     </div>
   );

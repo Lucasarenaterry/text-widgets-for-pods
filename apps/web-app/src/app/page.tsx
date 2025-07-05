@@ -1,24 +1,53 @@
 'use client';
-import { useSearchParams } from 'next/navigation';
 import { Button } from '../components/button';
 import { TextWidget } from '../components/textWidget';
 import { PlusIcon } from '@heroicons/react/24/solid';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TextWidgetObject } from '../interfaces';
-
-const widgetData: TextWidgetObject[] = [
-  {
-    id: 'widget-1',
-    text: 'This is a sample text widget. You can edit this text.',
-  },
-  {
-    id: 'widget-2',
-    text: 'Another text widget with different content.',
-  },
-];
+import ApiClient from '../client';
 
 export default function Index() {
-  const [widgets, setWidgets] = useState<TextWidgetObject[]>(widgetData);
+  const apiClient = new ApiClient('http://localhost:3000');
+  const [widgets, setWidgets] = useState<TextWidgetObject[]>([]);
+
+  useEffect(() => {
+    fetchTextWidgets();
+  }, []);
+
+  async function fetchTextWidgets() {
+    const data = await apiClient.textWidgetDao.fetchAllTextWidgets();
+    setWidgets(data);
+  }
+
+  async function handleAddWidget() {
+    const newTextWidget = await apiClient.textWidgetDao.createTextWidget();
+    if (newTextWidget) {
+      fetchTextWidgets();
+    }
+  }
+
+  async function handleSaveUpdatedTextWidget(textWidgetId: string) {
+    const widgetToSave = widgets.find((widget) => widget.id === textWidgetId);
+    if (widgetToSave) {
+      await apiClient.textWidgetDao.updateTextWidget(widgetToSave);
+    }
+  }
+
+  async function handleDeleteTextWidget(textWidgetId: string) {
+    const success = await apiClient.textWidgetDao.deleteTextWidget(
+      textWidgetId
+    );
+    if (success) {
+      fetchTextWidgets();
+    }
+  }
+
+  function handleOnChangeTextWidget(id: string, newText: string) {
+    const updatedWidgets = widgets.map((widget) =>
+      widget.id === id ? { ...widget, text: newText } : widget
+    );
+    setWidgets(updatedWidgets);
+  }
 
   return (
     <div className="w-full flex flex-col items-center min-h-screen bg-[#f5f3e7] gap-y-6">
@@ -26,9 +55,8 @@ export default function Index() {
         Text Widgets for Pods
       </h1>
       <Button
-        onClick={() => {
-          console.log('Button clicked');
-        }}
+        onClick={handleAddWidget}
+        class="textButton"
         label="Add Text Widget"
         icon={<PlusIcon className="h-5 w-5" />}
       />
@@ -38,10 +66,13 @@ export default function Index() {
           id={widget.id}
           text={widget.text}
           onChange={(newText) => {
-            console.log('Text changed:', newText);
+            handleOnChangeTextWidget(widget.id, newText);
+          }}
+          onBlur={() => {
+            handleSaveUpdatedTextWidget(widget.id);
           }}
           onDelete={() => {
-            console.log('Delete button clicked for widget:', widget.id);
+            handleDeleteTextWidget(widget.id);
           }}
         />
       ))}
