@@ -32,7 +32,7 @@
 
 ## Getting Started
 
-# Run web-app and api localy
+### Run web-app and api localy
 
 To run the application both the web-app and the server have to be run at the same time.
 
@@ -42,7 +42,7 @@ Run the web-app:
 Run the server (api):
 `npx nx serve api`
 
-# Run Docker Container
+### Run Docker Container
 
 You should have the following files in folder:
 
@@ -60,7 +60,7 @@ Load the images using:
 Run the container:
 `docker-compose up`
 
-# Build the Docker container and run
+### Build the Docker container and run
 
 Build the Docker container:
 `docker-compose up --build`
