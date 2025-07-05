@@ -1,16 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
-import TextWidgetDao from './daos/text_widget';
+import ApiClient from './apiClient';
 
-export default class ApiClient {
-  private client: AxiosInstance;
-
-  public textWidgetDao: TextWidgetDao;
-
-  constructor(baseURL: string) {
-    this.client = axios.create({
-      baseURL,
-    });
-
-    this.textWidgetDao = new TextWidgetDao(this.client);
-  }
-}
+const apiClient = new ApiClient('http://localhost:3000');
+export default apiClient;

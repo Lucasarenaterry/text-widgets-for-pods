@@ -4,10 +4,9 @@ import { TextWidget } from '../components/textWidget';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { useCallback, useEffect, useState } from 'react';
 import { TextWidgetObject } from '../interfaces';
-import ApiClient from '../client';
+import apiClient from '../client';
 
 export default function Index() {
-  const apiClient = new ApiClient('http://localhost:3000');
   const [widgets, setWidgets] = useState<TextWidgetObject[]>([]);
   const [error, setError] = useState<string | null>(null);
 
